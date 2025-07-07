@@ -13,9 +13,7 @@ A full-stack Flask web application that predicts diseases based on symptoms ente
 - [📁 Dataset Info](#-dataset-info)
 - [🧪 Sample Usage](#-sample-usage)
 - [📌 Dependencies](#-dependencies)
-- [🖼️ Screenshots](#-screenshots)
 - [🙋 Author](#-author)
-- [📌 License](#-license)
 
 ---
 
@@ -46,7 +44,8 @@ The ML model is trained using a cleaned version of the Kaggle dataset:
   - Model serialized using `joblib` to `model.pkl`
   - Symptoms stored in `symptoms_list.txt` for the UI
 
-Notebook:
+Notebook: notebook/training_pipeline.ipynb
+
 
 ---
 
@@ -58,8 +57,7 @@ ai-health-bot/
 ├── .gitignore
 ├── README.md
 ├── dataset/
-|   ├── *.pkl
-│   └── *.csv  
+│   └── disease_symptom.csv   # Cleaned dataset from Kaggle
 ├── notebook/
 │   └── training_pipeline.ipynb
 ├── bot/
@@ -67,8 +65,8 @@ ai-health-bot/
 │   └── symptoms_list.txt     # Unique symptoms list
 ├── static/
 │   ├── favicon/bot.png
-│   └── css/styles.css
-│   
+│   ├── css/styles.css
+│   └── screenshots/          # (Optional) Screenshots
 ├── templates/
 │   ├── layout.html
 │   ├── index.html
@@ -77,12 +75,94 @@ ai-health-bot/
 │       ├── login.html
 │       └── register.html
 ├── controllers/
-│   ├── auth_routes.py
-│   └── chatbot_routes.py
+│   ├── user_routes.py
+│   └── prediction_routes.py
 ├── models/
-|   ├── form.py
 │   └── user_model.py
-├── doc_reader/
-│   └── doc_summary.py
 └── instance/
     └── app.db                # SQLite3 database
+
+---
+
+## ⚙️ Setup Instructions
+
+# 1. Clone the repo
+git clone https://github.com/sharib-ahmad/ai-health-bot.git
+cd ai-health-bot
+
+# 2. Create virtual environment
+python3 -m venv venv
+source venv/bin/activate     # On Windows: venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Set environment variables (optional)
+export FLASK_APP=app.py
+export FLASK_ENV=development
+
+# 5. Run the app
+python app.py
+
+---
+
+## 📁 Dataset Info
+Dataset Source:
+🔗 Kaggle - Disease Symptom Description
+
+Used File:
+
+bash
+Copy
+Edit
+
+dataset/dataset.csv
+Symptom_1, Symptom_2, ..., Symptom_17, Disease
+
+---
+
+## 🧪 Sample Usage
+
+Go to /register → Create a new user
+
+Login at /login
+
+Enter symptoms (comma-separated) like:
+
+fever, cough, fatigue
+
+Click Predict to view the disease result
+
+View the disease summary or recommendation (optional)
+
+You can logout via the top nav
+
+---
+
+## 📌 Dependencies
+nginx
+Copy
+Edit
+Flask
+Flask-WTF
+Flask-Login
+Flask-SQLAlchemy
+scikit-learn
+joblib
+pandas
+numpy
+
+pip freeze > requirements.txt
+
+---
+
+## 🙋 Author
+👨‍💻 Sharib Ahmad
+
+📫sharibahmad6716@gmail.com      ---> personal gmail
+📫24f2001786@ds.study.iitm.ac.in --->college gmail/aicte
+
+
+🎓 B.S. Student | AI, ML & Data Scientist Enthusiast
+
+---
