@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block title %}Register | AI Health Bot{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_for_register.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="bg-animation">
+    <div class="floating-orb"></div>
+    <div class="floating-orb"></div>
+    <div class="floating-orb"></div>
+</div>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="icon">📝</div>
+            <h3>Create Account</h3>
+            <p>Join AI Health Bot today</p>
+        </div>
+        
+        <form method="POST" action="{{ url_for('auth_bp.register') }}">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="Enter your email") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control", placeholder="Create a password") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control", placeholder="Confirm your password") }}
+            </div>
+            
+            {{ form.submit(class="btn btn-success") }}
+        </form>
+        
+        <div class="auth-link">
+            <a href="{{ url_for('auth_bp.login') }}">Already have an account? Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,301 @@
+{% extends "layout.html" %}
+
+{% block title %}AI Health Assistant - Your Personal Health Companion{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_for_index.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">AI Health Assistant</h1>
+                <p class="hero-subtitle">Your intelligent companion for health information, disease prevention, and wellness guidance. Get instant, reliable health advice powered by advanced AI technology.</p>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('bot_bp.chat') }}" class="btn cta-button">Start Health Chat 🚀</a>
+                {% else %}
+                    <a href="{{ url_for('auth_bp.register') }}" class="btn cta-button">Get Started Free 🚀</a>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="hero-bot-container">
+                        <div class="hero-bot-icon">🤖</div>
+                        <div class="orbit-element">🩺</div>
+                        <div class="orbit-element">💊</div>
+                        <div class="orbit-element">🏥</div>
+                        <div class="orbit-element">❤️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title fade-in">Why Choose Our AI Health Bot?</h2>
+        <div class="row">
+            <div class="col-md-4 fade-in">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">🔬</div>
+                    <h4 class="fw-bold mb-3">Advanced AI Technology</h4>
+                    <p>Powered by cutting-edge artificial intelligence to provide accurate health information and personalized recommendations.</p>
+                </div>
+            </div>
+            <div class="col-md-4 fade-in">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">⚡</div>
+                    <h4 class="fw-bold mb-3">Instant Responses</h4>
+                    <p>Get immediate answers to your health questions 24/7. No waiting for appointments or long queues.</p>
+                </div>
+            </div>
+            <div class="col-md-4 fade-in">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">🛡️</div>
+                    <h4 class="fw-bold mb-3">Privacy & Security</h4>
+                    <p>Your health information is completely secure and private. We prioritize your confidentiality above all.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 stat-item">
+                <span class="stat-number">50K+</span>
+                <div class="stat-label">Health Queries Resolved</div>
+            </div>
+            <div class="col-md-3 stat-item">
+                <span class="stat-number">95%</span>
+                <div class="stat-label">User Satisfaction</div>
+            </div>
+            <div class="col-md-3 stat-item">
+                <span class="stat-number">24/7</span>
+                <div class="stat-label">Available Support</div>
+            </div>
+            <div class="col-md-3 stat-item">
+                <span class="stat-number">1000+</span>
+                <div class="stat-label">Disease Database</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Common Diseases Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title fade-in">Common Health Conditions We Cover</h2>
+        <div class="row">
+            <div class="col-md-6 fade-in">
+                <div class="disease-card">
+                    <h5 class="fw-bold text-primary mb-2">🫀 Cardiovascular Diseases</h5>
+                    <p class="mb-2">Heart disease, hypertension, stroke prevention, and cardiac health management.</p>
+                    <small class="text-muted">Get personalized advice for heart health</small>
+                </div>
+            </div>
+            <div class="col-md-6 fade-in">
+                <div class="disease-card">
+                    <h5 class="fw-bold text-primary mb-2">🩸 Diabetes Management</h5>
+                    <p class="mb-2">Type 1 & Type 2 diabetes, blood sugar monitoring, and lifestyle recommendations.</p>
+                    <small class="text-muted">Comprehensive diabetes care guidance</small>
+                </div>
+            </div>
+            <div class="col-md-6 fade-in">
+                <div class="disease-card">
+                    <h5 class="fw-bold text-primary mb-2">🫁 Respiratory Conditions</h5>
+                    <p class="mb-2">Asthma, COPD, allergies, and breathing-related health issues.</p>
+                    <small class="text-muted">Breathe easier with expert advice</small>
+                </div>
+            </div>
+            <div class="col-md-6 fade-in">
+                <div class="disease-card">
+                    <h5 class="fw-bold text-primary mb-2">🧠 Mental Health</h5>
+                    <p class="mb-2">Anxiety, depression, stress management, and mental wellness support.</p>
+                    <small class="text-muted">Mental health matters - get support</small>
+                </div>
+            </div>
+            <div class="col-md-6 fade-in">
+                <div class="disease-card">
+                    <h5 class="fw-bold text-primary mb-2">🦴 Musculoskeletal Issues</h5>
+                    <p class="mb-2">Joint pain, arthritis, back problems, and mobility concerns.</p>
+                    <small class="text-muted">Stay active and pain-free</small>
+                </div>
+            </div>
+            <div class="col-md-6 fade-in">
+                <div class="disease-card">
+                    <h5 class="fw-bold text-primary mb-2">🍎 Nutritional Disorders</h5>
+                    <p class="mb-2">Obesity, malnutrition, eating disorders, and dietary guidance.</p>
+                    <small class="text-muted">Nutrition for optimal health</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Precautions Section -->
+<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <h2 class="section-title fade-in">Essential Health Precautions</h2>
+        <div class="row">
+            <div class="col-md-6 fade-in">
+                <div class="precaution-item">
+                    <h6 class="fw-bold mb-2">🏃‍♂️ Regular Exercise</h6>
+                    <p class="mb-0">Engage in at least 150 minutes of moderate-intensity exercise per week to maintain cardiovascular health and overall fitness.</p>
+                </div>
+                <div class="precaution-item">
+                    <h6 class="fw-bold mb-2">🥗 Balanced Diet</h6>
+                    <p class="mb-0">Consume a variety of fruits, vegetables, whole grains, and lean proteins. Limit processed foods and excessive sugar intake.</p>
+                </div>
+                <div class="precaution-item">
+                    <h6 class="fw-bold mb-2">💧 Stay Hydrated</h6>
+                    <p class="mb-0">Drink at least 8 glasses of water daily to support bodily functions and maintain optimal health.</p>
+                </div>
+            </div>
+            <div class="col-md-6 fade-in">
+                <div class="precaution-item">
+                    <h6 class="fw-bold mb-2">😴 Quality Sleep</h6>
+                    <p class="mb-0">Aim for 7-9 hours of quality sleep each night. Maintain a consistent sleep schedule for better health.</p>
+                </div>
+                <div class="precaution-item">
+                    <h6 class="fw-bold mb-2">🧘‍♀️ Stress Management</h6>
+                    <p class="mb-0">Practice relaxation techniques, meditation, or yoga to manage stress and maintain mental well-being.</p>
+                </div>
+                <div class="precaution-item">
+                    <h6 class="fw-bold mb-2">🩺 Regular Check-ups</h6>
+                    <p class="mb-0">Schedule regular medical check-ups and screenings to detect and prevent health issues early.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 fade-in">
+                <h2 class="mb-4">Ready to Start Your Health Journey?</h2>
+                <p class="lead mb-4">Join thousands of users who trust our AI Health Assistant for reliable health information and personalized care guidance.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('bot_bp.chat') }}" class="btn btn-primary btn-lg px-4">Start Chatting Now</a>
+                    {% else %}
+                        <a href="{{ url_for('auth_bp.register') }}" class="btn btn-primary btn-lg px-4">Sign Up Free</a>
+                        <a href="{{ url_for('auth_bp.login') }}" class="btn btn-outline-primary btn-lg px-4">Already a member?</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="py-3" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="text-muted mb-0">
+                    <small>
+                        <strong>⚠️ Medical Disclaimer:</strong> This AI Health Assistant provides general health information and should not replace professional medical advice. 
+                        Always consult with qualified healthcare providers for diagnosis and treatment of medical conditions.
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Animate counter numbers
+    function animateCounter(element, target, duration = 2000) {
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            
+            if (element.textContent.includes('%')) {
+                element.textContent = Math.floor(current) + '%';
+            } else if (element.textContent.includes('K')) {
+                element.textContent = Math.floor(current / 1000) + 'K+';
+            } else {
+                element.textContent = Math.floor(current);
+            }
+        }, 16);
+    }
+
+    // Initialize counter animations when stats section is visible
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        const text = stat.textContent;
+                        if (text.includes('K')) {
+                            animateCounter(stat, 50000);
+                        } else if (text.includes('%')) {
+                            animateCounter(stat, 95);
+                        } else if (text.includes('24/7')) {
+                            stat.textContent = '24/7';
+                        } else {
+                            animateCounter(stat, 1000);
+                        }
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        statsObserver.observe(statsSection);
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

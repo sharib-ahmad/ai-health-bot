@@ -1,0 +1,114 @@
+:root {
+  --main-bg: #e9f5f2;
+  --main-dark: #0f4c75;
+  --main-light: #bbe1fa;
+  --accent: #00b894;
+  --font-main: "Poppins", sans-serif;
+  --font-alt: "Nunito", sans-serif;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--main-bg);
+  color: #333;
+  transition: background 0.3s ease-in-out;
+}
+
+.navbar {
+  background: var(--main-dark);
+}
+
+.navbar-brand,
+.nav-link,
+.navbar-toggler-icon {
+  color: white !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--main-light) !important;
+}
+
+.container {
+  margin-top: 30px;
+}
+
+.flash-msg {
+  position: relative;
+  animation: fadeIn 0.7s ease-in-out;
+  margin-bottom: 1rem;
+}
+
+.btn-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 15px;
+  font-size: larger;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--accent);
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #019874;
+  transform: scale(1.05);
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+/* Form Styling */
+form label {
+  font-weight: 500;
+}
+
+input,
+select,
+textarea {
+  border-radius: 10px !important;
+}
+
+/* Footer (optional if needed) */
+footer {
+  margin-top: 50px;
+  background: var(--main-dark);
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+pre {
+  font-family: "Nunito", sans-serif;
+  background-color: #f8f9fa;
+  border-left: 4px solid #0dcaf0;
+  padding: 1rem;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+

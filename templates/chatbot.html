@@ -1,0 +1,266 @@
+{% extends "layout.html" %}
+{% block title %}AI Health Bot | Chat{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_for_chatbot.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="chat-card p-4">
+                    <!-- Header -->
+                    <div class="chat-header">
+                        <h3 class="chat-title">💬 AI Health Assistant</h3>
+                        <p class="chat-subtitle mb-0">Your personal health companion powered by AI</p>
+                    </div>
+
+                    <!-- Input Section -->
+                    <div class="input-section">
+                        <form method="POST" id="chatForm"  enctype="multipart/form-data">
+                            {{ form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form.symptoms.label(class="form-label") }}
+                                {{ form.symptoms(class="form-control no-wrap", rows=3, placeholder="Describe your
+                                symptoms,
+                                health concerns, or ask any health-related questions...") }}
+                            </div>
+                            <div class="d-grid">
+                                {{ form.submit(class="btn submit-btn") }}
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Chat Display -->
+                    <div id="chatDisplay" class="chat-display">
+                        <div class="no-chat-message">
+                            <div class="icon">🤖</div>
+                            <p class="mb-0">No conversation yet. Start by asking me about your health!</p>
+                        </div>
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div id="typingLoader" class="typing-indicator d-none">
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <span>AI is analyzing and preparing your response...</span>
+                    </div>
+
+                    <!-- Chat Controls -->
+                    <div class="chat-controls">
+                        <button id="clearChat" class="control-btn danger">
+                            🧹 Clear Chat
+                        </button>
+                        <div class="d-flex gap-2">
+                            <button id="prevChat" class="control-btn">
+                                ⬅️ Previous
+                            </button>
+                            <button id="nextChat" class="control-btn">
+                                Next ➡️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getCSRFToken() {
+        return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    }
+
+    const chatBox = document.getElementById("chatDisplay");
+    const loader = document.getElementById("typingLoader");
+    const form = document.getElementById("chatForm");
+
+    // Enhanced chat loading with better animations
+    async function loadChat() {
+        try {
+            const res = await fetch("/api/chat/get");
+            const data = await res.json();
+
+            if (data.chat && data.chat.input) {
+                chatBox.innerHTML = `
+                    <div class="user-message">
+                        <strong>🧍 You:</strong> ${escapeHtml(data.chat.input)}
+                    </div>
+                    <div class="bot-message">
+                        <strong>🤖 AI Health Assistant:</strong>
+                        <pre>${escapeHtml(data.chat.response)}</pre>
+                    </div>
+                `;
+            } else {
+                chatBox.innerHTML = `
+                    <div class="no-chat-message">
+                        <div class="icon">🤖</div>
+                        <p class="mb-0">No conversation yet. Start by asking me about your health!</p>
+                    </div>
+                `;
+            }
+
+            // Animate chat display
+            chatBox.classList.remove("fade-out");
+            chatBox.classList.add("fade-in");
+
+            // Hide loader
+            loader.classList.add("d-none");
+
+            // Scroll to bottom if there's content
+            if (data.chat && data.chat.input) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        } catch (error) {
+            console.error('Error loading chat:', error);
+            chatBox.innerHTML = `
+                <div class="no-chat-message">
+                    <div class="icon">⚠️</div>
+                    <p class="mb-0">Error loading chat. Please try again.</p>
+                </div>
+            `;
+        }
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Enhanced navigation with smooth transitions
+    async function navigateChat(direction) {
+        // Add exit animation
+        chatBox.classList.add("fade-out");
+
+        try {
+            await fetch(`/api/chat/nav/${direction}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken()
+                }
+            });
+
+            // Wait for animation to complete
+            setTimeout(() => {
+                loadChat();
+            }, 300);
+        } catch (error) {
+            console.error('Error navigating chat:', error);
+            chatBox.classList.remove("fade-out");
+        }
+    }
+
+    // Event listeners
+    document.getElementById("prevChat").addEventListener("click", () => {
+        navigateChat("prev");
+    });
+
+    document.getElementById("nextChat").addEventListener("click", () => {
+        navigateChat("next");
+    });
+
+    document.getElementById("clearChat").addEventListener("click", async () => {
+        if (confirm("Are you sure you want to clear the chat history?")) {
+            chatBox.classList.add("fade-out");
+
+            try {
+                await fetch("/api/chat/clear", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken()
+                    }
+                });
+
+                setTimeout(() => {
+                    loadChat();
+                }, 300);
+            } catch (error) {
+                console.error('Error clearing chat:', error);
+                chatBox.classList.remove("fade-out");
+            }
+        }
+    });
+
+    // Enhanced form submission
+    form.addEventListener("submit", (e) => {
+        const textarea = form.querySelector('textarea');
+        const submitBtn = form.querySelector('.submit-btn');
+
+        if (textarea.value.trim() === '') {
+            e.preventDefault();
+            textarea.focus();
+            textarea.style.borderColor = '#dc3545';
+            setTimeout(() => {
+                textarea.style.borderColor = '';
+            }, 2000);
+            return;
+        }
+
+        // Show loading state
+        loader.classList.remove("d-none");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '🔄 Processing...';
+
+        // Re-enable after a delay (in case of errors)
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '{{ form.submit.label.text }}';
+        }, 5000);
+    });
+
+    // Auto-resize textarea
+    const textarea = form.querySelector('textarea');
+    if (textarea) {
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    }
+
+    // Initialize chat on page load
+    window.addEventListener('load', () => {
+        loadChat();
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            switch (e.key) {
+                case 'Enter':
+                    if (document.activeElement !== textarea) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    navigateChat('prev');
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    navigateChat('next');
+                    break;
+            }
+        }
+    });
+
+    // Add focus enhancement
+    textarea.addEventListener('focus', function () {
+        this.parentElement.parentElement.style.transform = 'scale(1.02)';
+        this.parentElement.parentElement.style.boxShadow = '0 0 25px rgba(0, 184, 148, 0.3)';
+    });
+
+    textarea.addEventListener('blur', function () {
+        this.parentElement.parentElement.style.transform = '';
+        this.parentElement.parentElement.style.boxShadow = '';
+    });
+</script>
+{% endblock %}

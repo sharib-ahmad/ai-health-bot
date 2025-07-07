@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Login | AI Health Bot{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_for_login.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="bg-animation">
+    <div class="floating-orb"></div>
+    <div class="floating-orb"></div>
+    <div class="floating-orb"></div>
+</div>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="icon">🔐</div>
+            <h3>Welcome Back</h3>
+            <p>Sign in to your account</p>
+        </div>
+        
+        <form method="POST" action="{{ url_for('auth_bp.login') }}">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="Enter your email") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control", placeholder="Enter your password") }}
+            </div>
+            
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+        
+        <div class="auth-link">
+            <a href="{{ url_for('auth_bp.register') }}">New here? Create an account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
