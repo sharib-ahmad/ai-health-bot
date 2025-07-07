@@ -82,5 +82,7 @@ ai-health-bot/
 ├── models/
 |   ├── form.py
 │   └── user_model.py
+├── doc_reader/
+│   └── doc_summary.py
 └── instance/
     └── app.db                # SQLite3 database
