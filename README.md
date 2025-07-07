@@ -6,14 +6,15 @@ A full-stack Flask web application that predicts diseases based on symptoms ente
 
 ## 📚 Table of Contents
 
-- [🚀 Features](#-features)
-- [🧠 Machine Learning](#-machine-learning)
-- [🗂️ Project Structure](#️-project-structure)
-- [⚙️ Setup Instructions](#️-setup-instructions)
-- [📁 Dataset Info](#-dataset-info)
-- [🧪 Sample Usage](#-sample-usage)
-- [📌 Dependencies](#-dependencies)
-- [🙋 Author](#-author)
+- [Features](#features)
+- [Machine Learning](#machine-learning)
+- [Project Structure](#project-structure)
+- [Setup Instructions](#setup-instructions)
+- [Dataset Info](#dataset-info)
+- [Sample Usage](#sample-usage)
+- [Dependencies](#dependencies)
+- [Author](#author)
+
 
 ---
 
